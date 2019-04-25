@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  proxy:
+    image: nginx:latest
+    container_name: 'proxy'
+    privileged: true
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./etc/nginx/conf.d/:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+networks:
+  default:
+    external:
+      name: shared
+
+  # letsencrypt-nginx:
+  #   image: jrcs/letsencrypt-nginx-proxy-companion
+  #   container_name: 'letsencrypt-nginx'
+  #   privileged: true
+    # volumes:
+    #   - /srv/docker/nginx-proxy-with-encrypt/certs:/etc/nginx/certs:rw
+    #   - /var/run/docker.sock:/var/run/docker.sock:ro
